@@ -68,11 +68,16 @@ class OfflineChecks(unittest.TestCase):
             exec(compile(source_tree('index.py'), 'index.py', 'exec'), env)
         self.assertEqual(system.call_args_list, [])
 
-    def test_index_keeps_chosen_link(self):
-        env = {'input': Mock(return_value='2'), 'print': Mock()}
-        with patch('os.system', return_value=0) as system:
-            exec(compile(source_tree('index.py'), 'index.py', 'exec'), env)
-        self.assertEqual(system.call_args_list, [call('xdg-open https://github.com/ANONYMOUS-U7P4L ')])
+    def test_index_removed_link_options_do_not_launch_commands(self):
+        for option in ('2', '02'):
+            with self.subTest(option=option):
+                env = {'input': Mock(return_value=option), 'print': Mock()}
+                with patch('sys.stdout', io.StringIO()), patch('os.system') as system, patch('random.choice') as choose:
+                    exec(compile(source_tree('index.py'), 'index.py', 'exec'), env)
+                system.assert_not_called()
+                choose.assert_not_called()
+                printed = '\n'.join(str(c.args[0]) for c in env['print'].call_args_list)
+                self.assertNotIn('Mở GitHub', printed)
 
     def test_missing_dependency_exits_without_auto_install(self):
         with self.assertRaises(SystemExit) as error:
@@ -113,27 +118,31 @@ class OfflineChecks(unittest.TestCase):
         env['menu']()
         env['login'].assert_called_once_with()
 
-    def test_admin_keeps_all_chosen_links(self):
-        for option, url in [('1', 'https://www.facebook.com/U7P4L.XR'), ('2', 'https://facebook.com/groups/anonymouscyberxd/'), ('3', 'https://t.me/TheU7p4lArmyX'), ('4', 'https://github.com/U7P4L-IN')]:
+    def test_main_removed_contact_options_do_not_launch_commands(self):
+        for option in ('2', '02', 'B', 'b'):
             with self.subTest(option=option):
                 env = load_main()
-                env['menu'] = Mock()
-                env['input'].return_value = option
-                with patch('os.system', return_value=0) as system:
-                    env['admin']()
-                system.assert_called_once_with('xdg-open ' + url)
+                env['input'].side_effect = [option, '0', '0']
+                env['login'] = Mock()
+                with self.assertRaises(SystemExit) as error:
+                    env['menu']()
+                self.assertEqual(error.exception.code, 0)
+                env['login'].assert_not_called()
+                self.assertNotIn('admin', env)
+                printed = '\n'.join(str(c.args[0]) for c in env['print'].call_args_list)
+                self.assertNotIn('Báo lỗi & Liên hệ', printed)
 
-    def test_admin_menu_vietnamese_labels(self):
-        env = load_main()
-        env['menu'] = Mock()
-        env['input'].return_value = '0'
-        printed = []
-        env['print'] = Mock(side_effect=lambda *args: printed.append(' '.join(str(a) for a in args)))
-        with patch('os.system'):
-            env['admin']()
-        combined = '\n'.join(printed)
-        self.assertIn('Trang Facebook', combined)
-        self.assertIn('Quay lại menu chính', combined)
+    def test_entrypoints_have_no_browser_commands(self):
+        for name in ('main.py', 'index.py'):
+            tree = source_tree(name)
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
+                    self.assertNotIn(node.func.attr, ('startfile', 'open_new', 'open_new_tab'))
+                    if isinstance(node.func.value, ast.Name) and node.func.value.id == 'os' and node.func.attr == 'system':
+                        self.assertEqual(ast.literal_eval(node.args[0]), 'clear')
+            text = (ROOT / name).read_text()
+            self.assertNotIn('xdg-open', text)
+            self.assertNotIn('webbrowser', text)
 
     def test_login_never_posts_and_preserves_credentials(self):
         requests = fake_requests()
@@ -178,7 +187,7 @@ class OfflineChecks(unittest.TestCase):
             self.assertEqual(cm.exception.code, 0)
         combined = '\n'.join(printed)
         self.assertIn('Bắt đầu', combined)
-        self.assertIn('Báo lỗi', combined)
+        self.assertNotIn('Báo lỗi', combined)
         self.assertIn('Thoát', combined)
         self.assertNotIn('U7P4L Army', combined)
 

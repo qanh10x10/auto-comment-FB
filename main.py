@@ -42,54 +42,17 @@ def menu():
     clear()
     linex()
     print(f" {_c(CYAN)}[01/A]{_c(RESET)} Bắt đầu tự động bình luận")
-    print(f" {_c(CYAN)}[02/B]{_c(RESET)} Báo lỗi & Liên hệ")
     print(f" {_c(CYAN)}[00/X]{_c(RESET)} Thoát chương trình")
     linex()
     option = input(f" {_c(CYAN)}[>]{_c(RESET)} Lựa chọn: ")
     if option in ('1', '01', 'A', 'a'):
         login()
         return None
-    if option in ('2', '02', 'B', 'b'):
-        admin()
-        return None
     if option in ('0', '00', 'x', 'X'):
         print(f" {_c(CYAN)}[THOÁT]{_c(RESET)} Đã thoát chương trình.")
         print(f" {_c(CYAN)}[CẢM ƠN]{_c(RESET)} Cảm ơn bạn đã sử dụng công cụ!")
         exit(0)
     print(f" {_c(CYAN)}[LỖI]{_c(RESET)} Tùy chọn không hợp lệ trong menu...")
-    menu()
-    return None
-
-def admin():
-    clear()
-    linex()
-    print(f" {_c(CYAN)}[01/A]{_c(RESET)} Truy cập Trang Facebook hỗ trợ")
-    print(f" {_c(CYAN)}[02/B]{_c(RESET)} Tham gia Nhóm Facebook cộng đồng")
-    print(f" {_c(CYAN)}[03/C]{_c(RESET)} Tham gia kênh Telegram")
-    print(f" {_c(CYAN)}[04/D]{_c(RESET)} Theo dõi trang GitHub")
-    print(f" {_c(CYAN)}[00/X]{_c(RESET)} Quay lại menu chính")
-    linex()
-    option = input(f" {_c(CYAN)}[>]{_c(RESET)} Lựa chọn: ")
-    if option in ('1', '01', 'A', 'a'):
-        os.system('xdg-open https://www.facebook.com/U7P4L.XR')
-        menu()
-        return None
-    if option in ('2', '02', 'B', 'b'):
-        os.system('xdg-open https://facebook.com/groups/anonymouscyberxd/')
-        menu()
-        return None
-    if option in ('3', '03', 'C', 'c'):
-        os.system('xdg-open https://t.me/TheU7p4lArmyX')
-        menu()
-        return None
-    if option in ('4', '04', 'D', 'd'):
-        os.system('xdg-open https://github.com/U7P4L-IN')
-        menu()
-        return None
-    if option in ('0', '00', 'X', 'x'):
-        menu()
-        return None
-    print(f" {_c(CYAN)}[THÔNG BÁO]{_c(RESET)} Tùy chọn không hợp lệ, quay lại menu chính...")
     menu()
     return None
 

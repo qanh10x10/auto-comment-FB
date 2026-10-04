@@ -19,7 +19,6 @@ logo3 = f"""{_c(CYAN)}━━━━━━━━━━━━━━━━━━━�
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{_c(RESET)}
 
   {_c(CYAN)}[1]{_c(RESET)} Xem hồ sơ mẫu ngẫu nhiên
-  {_c(CYAN)}[2]{_c(RESET)} Mở GitHub tác giả
   {_c(CYAN)}[3]{_c(RESET)} Thoát
 """
 print(logo3)
@@ -46,9 +45,7 @@ iccha = iccha.replace(' ', '')
 if iccha == '3' or iccha == '03':
     # ponytail: fixed original exit typo to clean sys.exit(0)
     sys.exit(0)
-if iccha == '2' or iccha == '02':
-    os.system('xdg-open https://github.com/ANONYMOUS-U7P4L ')
-if iccha == '1' or iccha == '02':
+if iccha == '1':
     vaggo = random.choice(gf)
     if _c(CYAN):
         os.system('clear')

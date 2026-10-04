@@ -3,11 +3,11 @@
 Both entrypoints were recovered from Python 3.11 bytecode as readable Python before removing automatic actions. Original revision: `5eef7eee49967ea1570e7fc90db0d061bc3fbfad`.
 
 Removed only:
-- Unprompted promotional browser opening at index startup and main-menu entry.
+- All promotional/contact browser-opening commands, including explicitly selected links, and their menu entries.
 - The fixed Facebook comment POST performed inside login, before the operator selects a target.
 - Runtime package installation/uninstallation and the missing `sms.py` launcher. Missing dependencies now produce a message and exit.
 
-Kept: existing terminal UI, explicit menu links, login/token extraction, and user-selected comment target/message/limit. Recovery is not the original author's source text: index recovery compiled to identical bytecode; main was reconstructed and its constants, control flow and exception handling reviewed against disassembly. Some f-string formatting appears as string concatenation.
+Kept: the compact Vietnamese terminal UI, login/token extraction, user-selected comment target/message/limit, and passive random sample output in index. No menu option launches a browser. Recovery is not the original author's source text: index recovery compiled to identical bytecode; main was reconstructed and its constants, control flow and exception handling reviewed against disassembly. Some f-string formatting appears as string concatenation.
 
 ## Offline checks
 
@@ -19,7 +19,7 @@ Tests reject encoded wrappers before execution, deny process/socket side effects
 
 ## Remaining original limitations
 
-`cookie.txt` and `token.txt` still store credentials in plaintext (excluded from Git). Original menu typos/option routing and legacy request construction are preserved, not repaired by this narrowly scoped change. Do not treat this cleanup as a comprehensive security hardening or a guarantee the Facebook API still accepts this flow.
+`cookie.txt` and `token.txt` still store credentials in plaintext (excluded from Git). The UI pass fixed explicit exit handling; the promotional/contact menu was subsequently removed. Legacy Facebook request construction remains unchanged. Do not treat this cleanup as a comprehensive security hardening or a guarantee the Facebook API still accepts this flow.
 
 ## Audit exception
 
