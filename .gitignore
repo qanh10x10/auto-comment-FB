@@ -1,0 +1,4 @@
+cookie.txt
+token.txt
+__pycache__/
+*.pyc
