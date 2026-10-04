@@ -1,109 +1,51 @@
 # Recovered readable source; automatic installs, promotion and hidden POST removed.
+import json
 import os
 import re
 import sys
-import time
-import json
-import random
-import datetime
+
 try:
     import bs4
     import requests
 except ModuleNotFoundError:
-    print('\n MISSING MODULES: install requests and beautifulsoup4 before running.')
+    print('\n[LỖI] THIẾU THƯ VIỆN: Vui lòng cài đặt requests và beautifulsoup4 trước khi chạy.')
     sys.exit(1)
 
-sys.stdout.write('\x1b]2; ANONYMOUS CYBER™🌻🔥💯\x07')
+def _c(code):
+    return code if sys.stdout.isatty() and 'NO_COLOR' not in os.environ else ''
+
+CYAN = '\033[36m'
+RESET = '\033[0m'
+
+logo = f"""{_c(CYAN)}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  FB AUTO COMMENT - TỰ ĐỘNG BÌNH LUẬN FB
+  Phiên bản: 1.0.3 | Tác giả: U7P4L-IN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━{_c(RESET)}"""
 
 def clear():
-    os.system('clear')
-
-print('    \x1b[38;5;8m❲\x1b[1;97m=\x1b[38;5;8m❳\x1b[38;5;46m INSTALLED SYSTEM ')
+    if _c(CYAN):
+        os.system('clear')
+    print(logo)
 
 try:
-    import os
-    import requests
-    import json
-    import time
-    import re
-    import random
-    import sys
-    import uuid
-    import string
-    import subprocess
-    from string import *
     from concurrent.futures import ThreadPoolExecutor as tred
 except ModuleNotFoundError:
-    print('\n MISSING MODULES: use Python 3 with concurrent.futures available.')
+    print('\n[LỖI] THIẾU THƯ VIỆN: Vui lòng sử dụng Python 3 có sẵn concurrent.futures.')
     sys.exit(1)
 except:
     pass  # Preserve the original optional-import fallback.
 
-A = '\x1b[1;97m'
-R = '\x1b[38;5;196m'
-Y = '\x1b[1;33m'
-G = '\x1b[1;96m'
-B = '\x1b[38;5;8m'
-G1 = '\x1b[38;5;48m'
-G2 = '\x1b[38;5;47m'
-G3 = '\x1b[38;5;48m'
-X2 = '\x1b[38;5;123m'
-X4 = '\x1b[38;5;86m'
-X5 = '\x1b[38;5;121m'
-
-N1 = '\x1b[1;92m\x1b[38;5;208m'
-N2 = '\x1b[1;92m\x1b[38;5;209m'
-N3 = '\x1b[1;92m\x1b[38;5;210m'
-N4 = '\x1b[1;92m\x1b[38;5;211m'
-L3 = '\x1b[1;92m\x1b[38;5;48m'
-L4 = '\x1b[1;92m\x1b[38;5;49m'
-L5 = '\x1b[1;92m\x1b[38;5;50m'
-
-def clear():
-    os.system('clear')
-    print(logo)
-
 def linex():
-    print(' ' + str(X5) + '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-
-def loadinglisen():
-    animation = ['[\x1b[1;91m■\x1b[0m□□□□□□□□□]', '[\x1b[1;92m■■\x1b[0m□□□□□□□□]', '[\x1b[1;93m■■■\x1b[0m□□□□□□□]', '[\x1b[1;94m■■■■\x1b[0m□□□□□□]', '[\x1b[1;95m■■■■■\x1b[0m□□□□□]', '[\x1b[1;96m■■■■■■\x1b[0m□□□□]', '[\x1b[1;97m■■■■■■■\x1b[0m□□□]', '[\x1b[1;98m■■■■■■■■\x1b[0m□□]', '[\x1b[1;99m■■■■■■■■■\x1b[0m□]', '[\x1b[1;910m■■■■■■■■■■\x1b[0m]']
-    for i in range(50):
-        time.sleep(0.1)
-        sys.stdout.write('\r\t ' + str(Y) + 'Loading' + str(N1) + '.' + str(N2) + '.' + str(N3) + '.' + str(N4) + '.' + str(A) + ' ' + animation[i % len(animation)] + '\x1b[0m ')
-        sys.stdout.flush()
-    print()
-
-logo = ''.join([
-    str(G), '\n\n',
-    str(L3), '  ┏━╸┏┓ ', str(L5), ' ┏━┓╻ ╻╺┳╸┏━┓ ', str(L3), '┏━╸┏━┓┏┳┓┏┳┓┏━╸┏┓╻╺┳╸\n',
-    str(L4), '  ┣╸ ┣┻┓ ', str(L4), '┣━┫┃ ┃ ┃ ┃ ┃ ', str(L4), '┃  ┃ ┃┃┃┃┃┃┃┣╸ ┃┗┫ ┃ \n',
-    str(L5), '  ╹  ┗━┛ ', str(L3), '╹ ╹┗━┛ ╹ ┗━┛ ', str(L5), '┗━╸┗━┛╹ ╹╹ ╹┗━╸╹ ╹ ╹\n ',
-    str(X5), '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n',
-    str(B), '【', str(A), '•', str(B), '】', str(Y), ' DEVELOPER     ', str(A), '➤ ', str(G3), 'U7P4L 1N  \n',
-    str(B), '【', str(A), '•', str(B), '】', str(Y), ' GITHUB        ', str(A), '➤ ', str(G3), 'U7P4L-IN \n',
-    str(B), '【', str(A), '•', str(B), '】', str(Y), ' VERSION       ', str(A), '➤ ', str(G3), '1.0.3\n',
-    str(B), '【', str(A), '•', str(B), '】', str(Y), ' TELEGRAM      ', str(A), '➤ ', str(G3), '@TheU7p4lArmyX\n',
-    str(B), '【', str(A), '•', str(B), '】', str(Y), " TOOL'S NAME   ", str(A), '➤ ', str(G3), '[\x1b\x1b[38;5;196m\x1b[1;97m\x1b[1;41m FB AUTO COMMENT\x1b[0m', str(G3), ']\n ',
-    str(X5), '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ '
-])
-
-def jalan(xnxx):
-    for hengker in xnxx + '\n':
-        sys.stdout.write(hengker)
-        sys.stdout.flush()
-        time.sleep(0.05)
+    print(f"{_c(CYAN)}──────────────────────────────────────────{_c(RESET)}")
 
 def menu():
     clear()
-    loadinglisen()
-    clear()
     linex()
-    print(str(B) + '【' + str(A) + '01' + str(Y) + '/' + str(A) + 'A' + str(B) + '】' + str(G1) + 'START AUTO COMMENT ')
-    print(str(B) + '【' + str(A) + '02' + str(Y) + '/' + str(A) + 'B' + str(B) + '】' + str(G1) + 'REPORT FOR BUGS ')
-    print(str(B) + '【' + str(A) + '00' + str(Y) + '/' + str(A) + 'X' + str(B) + '】' + str(R) + 'EXIT PROGRAMME ')
+    print(f" {_c(CYAN)}[01/A]{_c(RESET)} Bắt đầu tự động bình luận")
+    print(f" {_c(CYAN)}[02/B]{_c(RESET)} Báo lỗi & Liên hệ")
+    print(f" {_c(CYAN)}[00/X]{_c(RESET)} Thoát chương trình")
     linex()
-    option = input(str(B) + '【' + str(A) + '❯' + str(B) + '】' + str(G) + 'CHOICE ' + str(A) + '➤\x1b[1;32m ')
+    option = input(f" {_c(CYAN)}[>]{_c(RESET)} Lựa chọn: ")
     if option in ('1', '01', 'A', 'a'):
         login()
         return None
@@ -111,26 +53,23 @@ def menu():
         admin()
         return None
     if option in ('0', '00', 'x', 'X'):
-        print(str(B) + '【' + str(A) + '=' + str(B) + '】' + str(G) + 'EXIT DONE ...!!!')
-        print(str(B) + '【' + str(A) + '=' + str(B) + '】' + str(X2) + 'THANKS FOR USING OUR TOOLS ...!!!')
-        exit(' ' + str(X5) + '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-        return None
-    print(str(B) + '【' + str(A) + '=' + str(B) + '】' + str(G) + 'OPTION NOT FOUND IN MENU...')
+        print(f" {_c(CYAN)}[THOÁT]{_c(RESET)} Đã thoát chương trình.")
+        print(f" {_c(CYAN)}[CẢM ƠN]{_c(RESET)} Cảm ơn bạn đã sử dụng công cụ!")
+        exit(0)
+    print(f" {_c(CYAN)}[LỖI]{_c(RESET)} Tùy chọn không hợp lệ trong menu...")
     menu()
     return None
 
 def admin():
     clear()
-    loadinglisen()
-    clear()
     linex()
-    print(str(B) + '【' + str(A) + '01' + str(Y) + '/' + str(A) + 'A' + str(B) + '】' + str(G2) + 'JOIN FB PAGE')
-    print(str(B) + '【' + str(A) + '02' + str(Y) + '/' + str(A) + 'B' + str(B) + '】' + str(G2) + 'JOIN FB GROUP')
-    print(str(B) + '【' + str(A) + '03' + str(Y) + '/' + str(A) + 'C' + str(B) + '】' + str(G2) + 'JOIN TELEGRAM')
-    print(str(B) + '【' + str(A) + '04' + str(Y) + '/' + str(A) + 'D' + str(B) + '】' + str(G2) + 'FOLLOW GITHUB')
-    print(str(B) + '【' + str(A) + '00' + str(Y) + '/' + str(A) + 'X' + str(B) + '】' + str(R) + 'BACK TO MAIN MENU ')
+    print(f" {_c(CYAN)}[01/A]{_c(RESET)} Truy cập Trang Facebook hỗ trợ")
+    print(f" {_c(CYAN)}[02/B]{_c(RESET)} Tham gia Nhóm Facebook cộng đồng")
+    print(f" {_c(CYAN)}[03/C]{_c(RESET)} Tham gia kênh Telegram")
+    print(f" {_c(CYAN)}[04/D]{_c(RESET)} Theo dõi trang GitHub")
+    print(f" {_c(CYAN)}[00/X]{_c(RESET)} Quay lại menu chính")
     linex()
-    option = input(str(B) + '【' + str(A) + '❯' + str(B) + '】' + str(G) + 'CHOICE ' + str(A) + '➤\x1b[1;32m ')
+    option = input(f" {_c(CYAN)}[>]{_c(RESET)} Lựa chọn: ")
     if option in ('1', '01', 'A', 'a'):
         os.system('xdg-open https://www.facebook.com/U7P4L.XR')
         menu()
@@ -150,54 +89,54 @@ def admin():
     if option in ('0', '00', 'X', 'x'):
         menu()
         return None
-    print(str(B) + '【' + str(A) + '=' + str(B) + '】' + str(G) + 'BYE BYE BRO ')
+    print(f" {_c(CYAN)}[THÔNG BÁO]{_c(RESET)} Tùy chọn không hợp lệ, quay lại menu chính...")
     menu()
     return None
 
 def login():
     clear()
     linex()
-    cookie = input(str(B) + '【' + str(A) + '❯' + str(B) + '】' + str(G) + 'INPUT COOKIE ' + str(A) + '➤' + str(G1) + ' ')
+    cookie = input(f" {_c(CYAN)}[>]{_c(RESET)} Nhập Cookie Facebook: ")
     try:
         cari = requests.get('https://business.facebook.com/business_locations', headers={'user-agent': 'Mozilla/5.0 (Linux; Android 8.1.0; MI 8 Build/OPM1.171019.011) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.86 Mobile Safari/537.36', 'cookie': cookie})
         token = re.search(r'(EAAG\w+)', cari.text).group(1)
         if 'EAAG' in str(token):
             open('cookie.txt', 'w').write(cookie)
             open('token.txt', 'w').write(token)
-            jalan('\n' + str(B) + '【' + str(A) + '=' + str(B) + '】' + str(Y) + 'ENTERING WAIT A MOMENT......!!!')
+            print(f"\n {_c(CYAN)}[THÔNG TIN]{_c(RESET)} Đăng nhập thành công.")
             linex()
             comment()
     except AttributeError:
-        exit('\n' + str(B) + '【' + str(A) + '=' + str(B) + '】' + str(G) + 'COOKIES HAVE EXPIRED ......!!!')
+        exit(f"\n {_c(CYAN)}[LỖI]{_c(RESET)} Cookie đã hết hạn hoặc không hợp lệ!")
         linex()
     except requests.exceptions.ConnectionError:
-        print('\n' + str(B) + '【' + str(A) + '=' + str(B) + '】' + str(G) + 'NO INTERNET CONNECTION...')
+        print(f"\n {_c(CYAN)}[LỖI]{_c(RESET)} Không có kết nối mạng...")
         exit()
 
 def comment():
     cookie = open('cookie.txt', 'r').read()
     token = open('token.txt', 'r').read()
-    coki = {'cookie': cookie}
     clear()
     linex()
     try:
-        id = input(str(B) + '【' + str(A) + '=' + str(B) + '】' + str(G2) + 'ENTER YOUR POST ID ' + str(A) + '➤ ' + str(N1))
-        comment = input(str(B) + '【' + str(A) + '=' + str(B) + '】' + str(G2) + 'WRITE COMMENT ' + str(A) + '➤ ' + str(N3))
-        limit = int(input(str(B) + '【' + str(A) + '=' + str(B) + '】' + str(G2) + 'COMMENT LIMIT ' + str(A) + '➤ ' + str(X4) + ' '))
+        id = input(f" {_c(CYAN)}[>]{_c(RESET)} Nhập ID bài viết: ")
+        comment = input(f" {_c(CYAN)}[>]{_c(RESET)} Nhập nội dung bình luận: ")
+        limit = int(input(f" {_c(CYAN)}[>]{_c(RESET)} Nhập số lượng bình luận: "))
         linex()
         for x in range(limit):
             posting = requests.post('https://graph.facebook.com/' + str(id) + '/comments/?message=' + str(comment) + '&access_token=' + str(token), cookies={'cookie': cookie})
             cek = json.loads(posting.text)
             if 'id' in cek:
-                print(str(B) + '【' + str(A) + '•' + str(B) + '】' + str(G2) + 'SUCCEED ' + str(A) + '➤' + str(G) + ' ' + cek['id'])
+                print(f" {_c(CYAN)}[THÀNH CÔNG]{_c(RESET)} ID: {cek['id']} (Lần {x + 1}/{limit})")
             else:
-                print(str(B) + '【' + str(A) + '=' + str(B) + '】' + str(Y) + 'FAILED.........  !')
+                print(f" {_c(CYAN)}[THẤT BẠI]{_c(RESET)} Không thể gửi bình luận!")
                 exit()
-        print(str(B) + '【' + str(A) + '=' + str(B) + '】' + str(X2) + 'FINISHED  ....... ✓')
-        print(str(B) + '【' + str(A) + '=' + str(B) + '】' + str(Y) + 'PRESS ENTER TO GO BACK ')
-        input(' ' + str(X5) + '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+        print(f" {_c(CYAN)}[HOÀN TẤT]{_c(RESET)} Đã hoàn thành gửi bình luận.")
+        print(f" {_c(CYAN)}[THÔNG TIN]{_c(RESET)} Nhấn Enter để quay lại menu chính...")
+        input(f" {_c(CYAN)}──────────────────────────────────────────{_c(RESET)}")
         menu()
     except requests.exceptions.ConnectionError:
+        print(f"\n {_c(CYAN)}[LỖI]{_c(RESET)} Không có kết nối mạng...")
         exit()
 
 menu()
